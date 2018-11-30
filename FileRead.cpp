@@ -106,6 +106,13 @@ void FileRead::printBubbleSort(double* array)
   std::cout << "Start time: " << startTime << " ms" << std::endl;
   std::cout << "End time: " << endTime << " ms" << std::endl;
   std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
+
+  /*To see sorted list, uncomment code and recompile
+  for (int w = 0; w < numValues; w++)
+  {
+    std::cout << bubbleList[w] << std::endl;
+  }
+  */
 }
 
 /*
@@ -165,6 +172,13 @@ void FileRead::printQuickSort()
   std::cout << "Start time: " << startTime << " ms" << std::endl;
   std::cout << "End time: " << endTime << " ms" << std::endl;
   std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
+
+  /*To see sorted list, uncomment code and recompile
+  for (int w = 0; w < numValues; w++)
+  {
+    std::cout << quickList[w] << std::endl;
+  }
+  */
 }
 
 /*
@@ -200,6 +214,13 @@ void FileRead::printInsertionSort(double* array)
   std::cout << "Start time: " << startTime << " ms" << std::endl;
   std::cout << "End time: " << endTime << " ms" << std::endl;
   std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
+
+  /*To see sorted list, uncomment code and recompile
+  for (int w = 0; w < numValues; w++)
+  {
+    std::cout << insertionList[w] << std::endl;
+  }
+  */
 }
 
 void FileRead::printSelectionSort(double* array)
@@ -231,6 +252,13 @@ void FileRead::printSelectionSort(double* array)
   std::cout << "Start time: " << startTime << " ms" << std::endl;
   std::cout << "End time: " << endTime << " ms" << std::endl;
   std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
+
+  /*To see sorted list, uncomment code and recompile
+  for (int w = 0; w < numValues; w++)
+  {
+    std::cout << selectionList[w] << std::endl;
+  }
+  */
 }
 
 void FileRead::printAlgorithms()
