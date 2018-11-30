@@ -9,20 +9,21 @@ public:
 
   int getNumValues(std::string);
   void readThrough();
-  void printAlgorithms();
 
-  void printUnsorted();
   void printBubbleSort(double*);
   void quickSort(double*, int, int);
+  int partition(double*, int, int);
   void printQuickSort();
-  void printInsertionSort();
-  void printSelectionSort();
-public:
+  void printInsertionSort(double*);
+  void printSelectionSort(double*);
+  void printAlgorithms();
+
+private:
   double* doubleList;
   double* bubbleList;
   double* quickList;
   double* insertionList;
-  double* selectionlist;
+  double* selectionList;
   std::string file;
   int numValues;
 };

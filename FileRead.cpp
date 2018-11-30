@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include "FileRead.h"
 
 //Class Constructor
@@ -66,22 +67,6 @@ void FileRead::readThrough()
   }
 }
 
-//Method printing unsorted list of doubles
-void FileRead::printUnsorted()
-{
-  std::cout << "UNSORTED" << std::endl;
-  std::cout << "========" << std::endl;
-  for (int i = 0; i < numValues; ++i)
-  {
-    /* Skip the first variable in list because it only denotes
-    number of doubles present in file */
-    if (i != 0)
-    {
-      std::cout << doubleList [i] <<  std::endl;
-      continue;
-    }
-  }
-}
 
 /*
  Method implementing the bubble sort algorithm with following steps
@@ -91,6 +76,7 @@ void FileRead::printUnsorted()
 */
 void FileRead::printBubbleSort(double* array)
 {
+  clock_t startTime = clock();
   bubbleList = array;
 
   //SORTING SECTION
@@ -116,11 +102,10 @@ void FileRead::printBubbleSort(double* array)
   //PRINT SECTION
   std::cout << "BUBBLE SORT" << std::endl;
   std::cout << "===========" << std::endl;
-  for (int i = 0; i < numValues; ++i)
-  {
-    std::cout << doubleList[i] << std::endl;
-  }
-
+  clock_t endTime = clock();
+  std::cout << "Start time: " << startTime << " ms" << std::endl;
+  std::cout << "End time: " << endTime << " ms" << std::endl;
+  std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
 }
 
 /*
@@ -130,68 +115,133 @@ void FileRead::printBubbleSort(double* array)
   3) All elements larger than pivot are placed to right
   4) Repeat until no replacements needed
 */
-void FileRead::quickSort(double* array, int left, int right)
+void FileRead::quickSort(double* array, int low, int high)
 {
   quickList = array;
 
-  //SORTING SECTION
-  int i = left;
-  int j = right;
-  double pivot = quickList[0];
-
-  while (i <= j)
+  if (low < high)
   {
-    while (quickList[i] < pivot)
+    int index = partition(quickList, low, high);
+
+    quickSort(quickList, low, index - 1);
+    quickSort(quickList, index + 1, high);
+  }
+
+}
+
+int FileRead::partition(double* array, int low, int high)
+{
+  double pivot = quickList[high];
+  int i = low - 1;
+
+  for (int j = low; j <= high - 1; j++)
+  {
+    if (quickList[j] <= pivot)
     {
       i++;
-    }
-    while (quickList[j] > pivot)
-    {
-      j--;
-    }
-    if (i <= j)
-    {
       double temp = quickList[i];
       quickList[i] = quickList[j];
       quickList[j] = temp;
-      i++;
-      j--;
     }
   }
-  if (left < j)
-  {
-    quickSort(quickList, left, j);
-  }
-  if (i < right)
-  {
-    quickSort(quickList, i, right);
-  }
+  double temp = quickList[i + 1];
+  quickList[i + 1] = quickList[high];
+  quickList[high] = quickList[i + 1];
+
+  return (i + 1);
 }
 
 //Print method must be separate due to recursion
 void FileRead::printQuickSort()
 {
-  quickSort(doubleList, 0, numValues/8);
+  clock_t startTime = clock();
+  int num = numValues/sizeof(doubleList[0]);
+  quickSort(doubleList, 0, num-1);
 
   //PRINT SECTION
   std::cout << "QUICK SORT" << std::endl;
   std::cout << "===========" << std::endl;
-  for (int i = 0; i < numValues; i++)
-  {
-    std::cout << quickList[i] << std::endl;
-  }
+  clock_t endTime = clock();
+  std::cout << "Start time: " << startTime << " ms" << std::endl;
+  std::cout << "End time: " << endTime << " ms" << std::endl;
+  std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
 }
 
-void FileRead::printInsertionSort()
+/*
+  Method implementing the insertion sort algorithm. The array is
+  searched and unsorted items get moved and inserted into a 'sub-list'
+  which sorts based on insertion to such, hence "insertion sort"
+*/
+void FileRead::printInsertionSort(double* array)
 {
+  clock_t startTime = clock();
+  insertionList = array;
 
+  //SORTING SECTION
+  double key;
+  int j;
+  for (int i = 1; i < numValues; i++)
+  {
+    key = insertionList[i];
+    j = i -1;
+  }
+
+  while (j >= 0 && insertionList[j] > key)
+  {
+    insertionList[j + 1] = insertionList[j];
+    j -= 1;
+  }
+  insertionList[j + 1] = key;
+
+  //PRINT SECTION
+  std::cout << "INSERTION SORT" << std::endl;
+  std::cout << "==============" << std::endl;
+  clock_t endTime = clock();
+  std::cout << "Start time: " << startTime << " ms" << std::endl;
+  std::cout << "End time: " << endTime << " ms" << std::endl;
+  std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
+}
+
+void FileRead::printSelectionSort(double* array)
+{
+  clock_t startTime = clock();
+  selectionList = array;
+
+  //SORTING SECTION
+  int minimumIDX;
+  for (int i = 0; i < numValues - 1; i++)
+  {
+    minimumIDX = i;
+    for (int j = i+1; j < numValues; j++)
+    {
+      if (selectionList[j] < selectionList[minimumIDX])
+      {
+        minimumIDX = j;
+      }
+    }
+    double temp = selectionList[minimumIDX];
+    selectionList[minimumIDX] = selectionList[i];
+    selectionList[i] = temp;
+  }
+
+  //PRINT SECTION
+  std::cout << "SELECTION SORT" << std::endl;
+  std::cout << "==============" << std::endl;
+  clock_t endTime = clock();
+  std::cout << "Start time: " << startTime << " ms" << std::endl;
+  std::cout << "End time: " << endTime << " ms" << std::endl;
+  std::cout << "Elapsed time: " << endTime - startTime << " ms" << std::endl;
 }
 
 void FileRead::printAlgorithms()
 {
-  printUnsorted();
   std::cout << '\n' << std::endl;
   printBubbleSort(doubleList);
   std::cout << '\n' << std::endl;
   printQuickSort();
+  std::cout << '\n' << std::endl;
+  printInsertionSort(doubleList);
+  std::cout << '\n' << std::endl;
+  printSelectionSort(doubleList);
+  std::cout << '\n' << std::endl;
 }
