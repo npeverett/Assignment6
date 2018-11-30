@@ -184,7 +184,7 @@ void FileRead::printQuickSort()
 /*
   Method implementing the insertion sort algorithm. The array is
   searched and unsorted items get moved and inserted into a 'sub-list'
-  which sorts based on insertion to such, hence "insertion sort"
+  which sorts based on insertion to sublist, hence "insertion sort"
 */
 void FileRead::printInsertionSort(double* array)
 {
@@ -223,6 +223,12 @@ void FileRead::printInsertionSort(double* array)
   */
 }
 
+/*
+  Method implementing the selection sort algorithm. This algorithm
+  finds the minimum element in the array and places it at the beginning.
+  There exists two subarrays, sorted and unsorted, and every iteration
+  the minimum element from the unsorted gets moved to the sorted.
+*/
 void FileRead::printSelectionSort(double* array)
 {
   clock_t startTime = clock();
